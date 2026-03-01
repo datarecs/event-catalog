@@ -1,0 +1,15 @@
+{
+  "name": "@datarecs/event-catalog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx @eventcatalog/core@latest dev",
+    "build": "npx @eventcatalog/core@latest build",
+    "preview": "npx @eventcatalog/core@latest preview",
+    "generate": "npx @eventcatalog/core@latest generate"
+  },
+  "dependencies": {
+    "@eventcatalog/core": "latest"
+  },
+  "devDependencies": {}
+}

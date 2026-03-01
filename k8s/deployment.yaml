@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-catalog
+  namespace: datarecs
+  labels:
+    app: event-catalog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-catalog
+  template:
+    metadata:
+      labels:
+        app: event-catalog
+    spec:
+      containers:
+        - name: event-catalog
+          image: gcr.io/datarecs/event-catalog:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 3
+            periodSeconds: 10
