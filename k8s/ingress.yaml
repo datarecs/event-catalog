@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - events.datarecs.com
+        - events.datarecs.local
       secretName: event-catalog-tls
   rules:
-    - host: events.datarecs.com
+    - host: events.datarecs.local
       http:
         paths:
           - path: /
