@@ -1,24 +1,16 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: networking.istio.io/v1
+kind: VirtualService
 metadata:
   name: event-catalog
   namespace: datarecs
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
-  tls:
-    - hosts:
-        - events.datarecs.local
-      secretName: event-catalog-tls
-  rules:
-    - host: events.datarecs.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: event-catalog
-                port:
-                  number: 80
+  hosts:
+    - events.datarecs.local
+  gateways:
+    - istio-system/datarecs
+  http:
+    - route:
+        - destination:
+            host: event-catalog.datarecs.svc.cluster.local
+            port:
+              number: 80
