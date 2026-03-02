@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a workspace is deleted.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,16 @@ Emitted when a workspace is deleted.
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`WorkspaceLifecyclePayload`)
 
 ```typescript
-{ workspace_id: string; name: string; actor_id: string; }
+{
+  workspace_id: string;
+  name: string;
+  description?: string;
+  metadata?: Record<string, string>;
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

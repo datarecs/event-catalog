@@ -3,9 +3,9 @@ id: connection-checker
 name: Connection Checker
 version: 0.1.0
 sends:
-  - id: connection-reserved
-  - id: connection-reservation-updated
-  - id: connection-reservation-deleted
+  - id: reservation-created
+  - id: reservation-updated
+  - id: reservation-deleted
 receives:
   - id: connection-created
   - id: connection-updated
@@ -16,4 +16,3 @@ gRPC microservice responsible for database connectivity validation, credential s
 
 - **Event Source URI**: `/datarecs/connection-checker`
 - **Technology**: NestJS gRPC (Node.js)
-- **Protocol**: gRPC (via `data-models-protos`)

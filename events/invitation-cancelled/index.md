@@ -1,30 +1,28 @@
 ---
-id: job-run-completed
-name: Job Run Completed
+id: invitation-cancelled
+name: Invitation Cancelled
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
     textColor: white
     backgroundColor: blue
-  - content: Reconciliation
+  - content: Identity & Access
     textColor: white
     backgroundColor: green
 ---
-
-Emitted when a job run finishes successfully.
 
 ## CloudEvents Attributes
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.reconciliation.run.completed` |
+| **type** | `com.datarecs.identity.invitation.cancelled` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`UserInvitationCancelledPayload`)
 
 ```typescript
-{ run_id: string; job_id: string; status: RunStatus; rows_processed: number; rows_matched: number; rows_unmatched: number; summary?: Record<string, any>; }
+{ /* schema not found — check data-models-events */ }
 ```
 
 <Admonition type="tip">

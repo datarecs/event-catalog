@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a user group is updated.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,15 @@ Emitted when a user group is updated.
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`GroupLifecyclePayload`)
 
 ```typescript
-{ group_id: string; name: string; description?: string; actor_id: string; }
+{
+  group_id: string;
+  name: string;
+  description?: string;
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

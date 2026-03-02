@@ -1,6 +1,6 @@
 ---
 id: api-key-deleted
-name: API Key Deleted
+name: Api Key Deleted
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when an API key is deleted.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,15 @@ Emitted when an API key is deleted.
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`ApiKeyLifecyclePayload`)
 
 ```typescript
-{ api_key_id: string; name: string; scopes: string[]; actor_id: string; }
+{
+  api_key_id: string;
+  name: string;
+  scopes: string[];
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

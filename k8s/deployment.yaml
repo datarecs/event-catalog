@@ -18,7 +18,7 @@ spec:
       containers:
         - name: event-catalog
           image: gcr.io/datarecs/event-catalog:latest
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
           resources:

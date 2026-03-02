@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when an admin invites a new user to the tenant.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,13 @@ Emitted when an admin invites a new user to the tenant.
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`UserInvitedPayload`)
 
 ```typescript
-{ email: string; invited_by: string; }
+{
+  email: string;
+  invited_by: string;
+}
 ```
 
 <Admonition type="tip">

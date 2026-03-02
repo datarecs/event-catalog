@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a job run is triggered (immediately or dry-run). This is the handoff from core-api to the reconciliation workers.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,16 @@ Emitted when a job run is triggered (immediately or dry-run). This is the handof
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`JobTriggeredPayload`)
 
 ```typescript
-{ run_id: string; job_id: string; mode: 'IMMEDIATE' | 'DRY_RUN'; params?: Record<string, string>; triggered_by: string; }
+{
+  run_id: string;
+  job_id: string;
+  mode: TriggerMode;
+  params?: Record<string, string>;
+  triggered_by: string;
+}
 ```
 
 <Admonition type="tip">

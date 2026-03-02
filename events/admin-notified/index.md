@@ -1,30 +1,31 @@
 ---
-id: connection-reserved
-name: Connection Reserved
+id: admin-notified
+name: Admin Notified
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
     textColor: white
     backgroundColor: blue
-  - content: Connection Management
+  - content: Tenant Management
     textColor: white
     backgroundColor: green
 ---
-
-Emitted by connection-checker when credentials are stored in Vault and egress policy is created.
 
 ## CloudEvents Attributes
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.connection.reservation.created` |
+| **type** | `com.datarecs.tenant.admin.notified` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`TenantAdminNotifiedPayload`)
 
 ```typescript
-{ reservation_id: string; type: ConnectionType; success: boolean; error?: string; }
+{
+  email: string;
+  domain: string;
+}
 ```
 
 <Admonition type="tip">

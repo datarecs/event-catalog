@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a new tenant has been fully provisioned — database schema created, Vault paths set up, and admin user ready.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,15 @@ Emitted when a new tenant has been fully provisioned — database schema created
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`TenantProvisionedPayload`)
 
 ```typescript
-{ tenant_id: string; domain: string; admin_email: string; provisioned_at: string; }
+{
+  tenant_id: string;
+  domain: string;
+  admin_email: string;
+  provisioned_at: string;
+}
 ```
 
 <Admonition type="tip">

@@ -1,30 +1,32 @@
 ---
-id: job-run-rows-processed
-name: Job Run Rows Processed
+id: join-request-denied
+name: Join Request Denied
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
     textColor: white
     backgroundColor: blue
-  - content: Reconciliation
+  - content: Identity & Access
     textColor: white
     backgroundColor: green
 ---
-
-Progress event emitted periodically during extraction/comparison to report row processing counts.
 
 ## CloudEvents Attributes
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.reconciliation.run.rows_processed` |
+| **type** | `com.datarecs.identity.join_request.denied` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`JoinRequestDecisionPayload`)
 
 ```typescript
-{ run_id: string; job_id: string; stage_name: string; row_count: number; mismatch_count?: number; }
+{
+  request_id: string;
+  user_id: string;
+  decision: 'approved' | 'denied';
+}
 ```
 
 <Admonition type="tip">

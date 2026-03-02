@@ -1,30 +1,30 @@
 ---
-id: job-run-cancelled
-name: Job Run Cancelled
+id: user-logged-out
+name: User Logged Out
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
     textColor: white
     backgroundColor: blue
-  - content: Reconciliation
+  - content: Identity & Access
     textColor: white
     backgroundColor: green
 ---
-
-Emitted when a job run is cancelled by a user or system.
 
 ## CloudEvents Attributes
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.reconciliation.run.cancelled` |
+| **type** | `com.datarecs.identity.user.logged_out` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`UserLoggedOutPayload`)
 
 ```typescript
-{ run_id: string; job_id: string; cancelled_by: string; }
+{
+  user_id: string;
+}
 ```
 
 <Admonition type="tip">

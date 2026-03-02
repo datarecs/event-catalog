@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a custom RBAC role is updated.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,14 @@ Emitted when a custom RBAC role is updated.
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`CustomRoleLifecyclePayload`)
 
 ```typescript
-{ role_id: number; name: string; actor_id: string; }
+{
+  role_id: number;
+  name: string;
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

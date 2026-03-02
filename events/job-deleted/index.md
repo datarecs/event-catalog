@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a reconciliation job definition is deleted.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,15 @@ Emitted when a reconciliation job definition is deleted.
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`JobLifecyclePayload`)
 
 ```typescript
-{ job_id: string; workspace_id: string; name: string; actor_id: string; }
+{
+  job_id: string;
+  workspace_id: string;
+  name: string;
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

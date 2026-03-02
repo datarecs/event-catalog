@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a connection test is performed (via connection-checker gRPC).
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,16 @@ Emitted when a connection test is performed (via connection-checker gRPC).
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`ConnectionTestedPayload`)
 
 ```typescript
-{ connection_id: string; type: ConnectionType; valid: boolean; error?: string; actor_id: string; }
+{
+  connection_id: string;
+  type: ConnectionType;
+  valid: boolean;
+  error?: string;
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

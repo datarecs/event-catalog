@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a job group is created, referencing existing job IDs.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,16 @@ Emitted when a job group is created, referencing existing job IDs.
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`JobGroupLifecyclePayload`)
 
 ```typescript
-{ job_group_id: string; workspace_id: string; name: string; job_ids: string[]; actor_id: string; }
+{
+  job_group_id: string;
+  workspace_id: string;
+  name: string;
+  job_ids: string[];
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

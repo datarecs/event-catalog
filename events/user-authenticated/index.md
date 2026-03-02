@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a user successfully authenticates via WorkOS (or other identity provider).
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,14 @@ Emitted when a user successfully authenticates via WorkOS (or other identity pro
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`UserAuthenticatedPayload`)
 
 ```typescript
-{ user_id: string; email: string; provider: string; }
+{
+  user_id: string;
+  email: string;
+  provider: string;
+}
 ```
 
 <Admonition type="tip">

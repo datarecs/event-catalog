@@ -1,6 +1,6 @@
 ---
-id: job-schedule-created
-name: Job Schedule Created
+id: schedule-deleted
+name: Schedule Deleted
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
@@ -11,20 +11,24 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a cron schedule is created for a job.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.reconciliation.schedule.created` |
+| **type** | `com.datarecs.reconciliation.schedule.deleted` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`JobScheduleLifecyclePayload`)
 
 ```typescript
-{ schedule_id: string; job_id: string; cron_expression: string; timezone?: string; actor_id: string; }
+{
+  schedule_id: string;
+  job_id: string;
+  cron_expression: string;
+  timezone?: string;
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

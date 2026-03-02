@@ -1,6 +1,6 @@
 ---
-id: connection-reservation-deleted
-name: Connection Reservation Deleted
+id: reservation-updated
+name: Reservation Updated
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
@@ -11,20 +11,23 @@ badges:
     backgroundColor: green
 ---
 
-Emitted by connection-checker when a reservation is cleaned up (Vault secrets removed, egress policy deleted).
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.connection.reservation.deleted` |
+| **type** | `com.datarecs.connection.reservation.updated` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`ConnectionReservationPayload`)
 
 ```typescript
-{ reservation_id: string; type: ConnectionType; success: boolean; error?: string; }
+{
+  reservation_id: string;
+  type: ConnectionType;
+  success: boolean;
+  error?: string;
+}
 ```
 
 <Admonition type="tip">

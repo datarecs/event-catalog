@@ -1,1 +1,9 @@
 node_modules
+.eventcatalog-core
+docs
+dist
+k8s
+.dockerignore
+.gitignore
+Dockerfile
+setup.sh

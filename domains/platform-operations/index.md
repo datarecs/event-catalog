@@ -4,7 +4,7 @@ name: Platform Operations
 version: 0.1.0
 ---
 
-API keys, encryption, billing, and platform administration
+API keys, encryption, billing, and platform administration.
 
 <Admonition type="info">
 All events in this domain follow the CloudEvents v1.0 spec with Knative-compatible type naming: `com.datarecs.<domain>.<entity>.<action>`

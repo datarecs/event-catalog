@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a new database connection is created. Triggers the connection-checker to reserve and validate.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,16 @@ Emitted when a new database connection is created. Triggers the connection-check
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`ConnectionLifecyclePayload`)
 
 ```typescript
-{ connection_id: string; workspace_id: string; name: string; type: ConnectionType; actor_id: string; }
+{
+  connection_id: string;
+  workspace_id: string;
+  name: string;
+  type: ConnectionType;
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

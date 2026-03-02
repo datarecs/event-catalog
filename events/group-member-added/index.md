@@ -1,30 +1,32 @@
 ---
-id: connection-reservation-updated
-name: Connection Reservation Updated
+id: group-member-added
+name: Group Member Added
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
     textColor: white
     backgroundColor: blue
-  - content: Connection Management
+  - content: Identity & Access
     textColor: white
     backgroundColor: green
 ---
-
-Emitted by connection-checker when a reserved connection's credentials are updated in Vault.
 
 ## CloudEvents Attributes
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.connection.reservation.updated` |
+| **type** | `com.datarecs.identity.group.member_added` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`GroupMembershipPayload`)
 
 ```typescript
-{ reservation_id: string; type: ConnectionType; success: boolean; error?: string; }
+{
+  group_id: string;
+  user_id: string;
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

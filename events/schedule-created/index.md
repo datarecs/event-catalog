@@ -1,6 +1,6 @@
 ---
-id: job-run-stage-completed
-name: Job Run Stage Completed
+id: schedule-created
+name: Schedule Created
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
@@ -11,20 +11,24 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a single stage within a multi-stage job run completes.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.reconciliation.run.stage_completed` |
+| **type** | `com.datarecs.reconciliation.schedule.created` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`JobScheduleLifecyclePayload`)
 
 ```typescript
-{ run_id: string; job_id: string; stage_name: string; status: string; error_details?: Record<string, any>; }
+{
+  schedule_id: string;
+  job_id: string;
+  cron_expression: string;
+  timezone?: string;
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

@@ -11,8 +11,6 @@ badges:
     backgroundColor: green
 ---
 
-Emitted when a connection's configuration is updated.
-
 ## CloudEvents Attributes
 
 | Attribute | Value |
@@ -21,10 +19,16 @@ Emitted when a connection's configuration is updated.
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`ConnectionLifecyclePayload`)
 
 ```typescript
-{ connection_id: string; workspace_id: string; name: string; type: ConnectionType; actor_id: string; }
+{
+  connection_id: string;
+  workspace_id: string;
+  name: string;
+  type: ConnectionType;
+  actor_id: string;
+}
 ```
 
 <Admonition type="tip">

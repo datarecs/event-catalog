@@ -1,30 +1,33 @@
 ---
-id: job-run-failed
-name: Job Run Failed
+id: reservation-deleted
+name: Reservation Deleted
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
     textColor: white
     backgroundColor: blue
-  - content: Reconciliation
+  - content: Connection Management
     textColor: white
     backgroundColor: green
 ---
-
-Emitted when a job run fails.
 
 ## CloudEvents Attributes
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.reconciliation.run.failed` |
+| **type** | `com.datarecs.connection.reservation.deleted` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema
+## Payload Schema (`ConnectionReservationPayload`)
 
 ```typescript
-{ run_id: string; job_id: string; error_code: string; error_message: string; error_details?: string; }
+{
+  reservation_id: string;
+  type: ConnectionType;
+  success: boolean;
+  error?: string;
+}
 ```
 
 <Admonition type="tip">
