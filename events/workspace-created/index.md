@@ -15,7 +15,7 @@ badges:
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.workspace.workspace.created` |
+| **type** | `io.datarecs.workspace.workspace.created` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 

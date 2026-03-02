@@ -15,7 +15,7 @@ badges:
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.reconciliation.job_group.created` |
+| **type** | `io.datarecs.reconciliation.job_group.created` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 

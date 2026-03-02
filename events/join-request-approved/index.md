@@ -15,7 +15,7 @@ badges:
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.identity.join_request.approved` |
+| **type** | `io.datarecs.identity.join_request.approved` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 

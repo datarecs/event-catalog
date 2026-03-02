@@ -15,7 +15,7 @@ badges:
 
 | Attribute | Value |
 |---|---|
-| **type** | `com.datarecs.workspace.workspace.deleted` |
+| **type** | `io.datarecs.workspace.workspace.deleted` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 

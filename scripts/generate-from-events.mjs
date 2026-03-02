@@ -28,32 +28,32 @@ const SERVICE_META = {
     name: 'Core API',
     description: 'The central REST API that handles user requests, authentication, authorisation, and orchestration. Primary event producer for most domain events.\n\n- **Event Source URI**: `/datarecs/core-api`\n- **Technology**: NestJS (Node.js)',
     sendsDomains: ['tenant', 'identity', 'workspace', 'connection', 'reconciliation', 'platform'],
-    sendsExclude: ['com.datarecs.connection.reservation.', 'com.datarecs.reconciliation.run.'],
-    receivesPrefix: ['com.datarecs.reconciliation.run.completed', 'com.datarecs.reconciliation.run.failed', 'com.datarecs.reconciliation.run.rows_processed'],
+    sendsExclude: ['io.datarecs.connection.reservation.', 'io.datarecs.reconciliation.run.'],
+    receivesPrefix: ['io.datarecs.reconciliation.run.completed', 'io.datarecs.reconciliation.run.failed', 'io.datarecs.reconciliation.run.rows_processed'],
   },
   'connection-checker': {
     name: 'Connection Checker',
     description: 'gRPC microservice responsible for database connectivity validation, credential storage in Vault, and K8s egress policy management.\n\n- **Event Source URI**: `/datarecs/connection-checker`\n- **Technology**: NestJS gRPC (Node.js)',
-    sendsPrefix: ['com.datarecs.connection.reservation.'],
-    receivesPrefix: ['com.datarecs.connection.connection.created', 'com.datarecs.connection.connection.updated', 'com.datarecs.connection.connection.deleted'],
+    sendsPrefix: ['io.datarecs.connection.reservation.'],
+    receivesPrefix: ['io.datarecs.connection.connection.created', 'io.datarecs.connection.connection.updated', 'io.datarecs.connection.connection.deleted'],
   },
   'platform-agent': {
     name: 'Platform Agent',
     description: 'gRPC microservice for database introspection — listing databases, schemas, tables, and columns on tenant connections.\n\n- **Event Source URI**: `/datarecs/platform-agent`\n- **Technology**: NestJS gRPC (Node.js)',
     sendsPrefix: [],
-    receivesPrefix: ['com.datarecs.connection.reservation.created'],
+    receivesPrefix: ['io.datarecs.connection.reservation.created'],
   },
   'reconciliation-workers': {
     name: 'Reconciliation Workers',
     description: 'Ephemeral Node.js workers (extractors and comparators) that execute the actual data reconciliation.\n\n- **Event Source URI**: `/datarecs/reconciliation-worker`\n- **Technology**: Node.js (Turborepo)\n- **Execution**: Ephemeral K8s Jobs',
-    sendsPrefix: ['com.datarecs.reconciliation.run.'],
-    receivesPrefix: ['com.datarecs.reconciliation.job.triggered'],
+    sendsPrefix: ['io.datarecs.reconciliation.run.'],
+    receivesPrefix: ['io.datarecs.reconciliation.job.triggered'],
   },
   'console': {
     name: 'Console',
     description: 'Angular SPA for logged-in users. Subscribes to events via WebSocket for real-time updates on job run status and progress.\n\n- **Technology**: Angular\n- **Event Delivery**: WebSocket (bridged from Knative by core-api)',
     sendsPrefix: [],
-    receivesPrefix: ['com.datarecs.reconciliation.run.started', 'com.datarecs.reconciliation.run.stage_completed', 'com.datarecs.reconciliation.run.completed', 'com.datarecs.reconciliation.run.failed', 'com.datarecs.reconciliation.run.rows_processed'],
+    receivesPrefix: ['io.datarecs.reconciliation.run.started', 'io.datarecs.reconciliation.run.stage_completed', 'io.datarecs.reconciliation.run.completed', 'io.datarecs.reconciliation.run.failed', 'io.datarecs.reconciliation.run.rows_processed'],
   },
 };
 
@@ -74,7 +74,7 @@ const LIFECYCLE_GROUPS = {
 function parseEventTypes(filePath) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const events = [];
-  const regex = /^\s+(\w+)\s+=\s+'(com\.datarecs\.(\w+)\.(.+))'/gm;
+  const regex = /^\s+(\w+)\s+=\s+'(io\.datarecs\.(\w+)\.(.+))'/gm;
   let match;
   while ((match = regex.exec(content)) !== null) {
     const [, enumKey, type, domain, entityAction] = match;
@@ -139,7 +139,7 @@ version: 0.1.0
 ${meta.description}
 
 <Admonition type="info">
-All events in this domain follow the CloudEvents v1.0 spec with Knative-compatible type naming: \`com.datarecs.<domain>.<entity>.<action>\`
+All events in this domain follow the CloudEvents v1.0 spec with Knative-compatible type naming: \`io.datarecs.<domain>.<entity>.<action>\`
 </Admonition>
 `);
   }
