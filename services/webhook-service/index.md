@@ -1,8 +1,11 @@
 ---
-id: core-api
-name: Core API
+id: webhook-service
+name: Webhook Service
 version: 0.1.0
 sends:
+  - id: delivery-failed
+  - id: delivery-dead-lettered
+receives:
   - id: tenant-provisioned
   - id: domain-checked
   - id: admin-notified
@@ -28,6 +31,9 @@ sends:
   - id: connection-updated
   - id: connection-deleted
   - id: connection-tested
+  - id: reservation-created
+  - id: reservation-updated
+  - id: reservation-deleted
   - id: job-created
   - id: job-updated
   - id: job-deleted
@@ -38,6 +44,12 @@ sends:
   - id: schedule-created
   - id: schedule-updated
   - id: schedule-deleted
+  - id: run-started
+  - id: run-stage-completed
+  - id: run-completed
+  - id: run-failed
+  - id: run-cancelled
+  - id: run-rows-processed
   - id: api-key-created
   - id: api-key-updated
   - id: api-key-deleted
@@ -48,13 +60,12 @@ sends:
   - id: subscription-created
   - id: subscription-updated
   - id: subscription-deleted
-receives:
-  - id: run-completed
-  - id: run-failed
-  - id: run-rows-processed
+  - id: delivery-failed
+  - id: delivery-dead-lettered
 ---
 
-The central REST API that handles user requests, authentication, authorisation, and orchestration. Primary event producer for most domain events.
+Knative subscriber that matches inbound CloudEvents against tenant webhook subscriptions and delivers them to registered HTTP endpoints with HMAC-SHA256 signing, retries, and dead-lettering.
 
-- **Event Source URI**: `/datarecs/core-api`
+- **Event Source URI**: `/datarecs/webhook-service`
 - **Technology**: NestJS (Node.js)
+- **Delivery**: HTTP POST with exponential-backoff retry

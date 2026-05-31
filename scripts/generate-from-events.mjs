@@ -21,14 +21,15 @@ const DOMAIN_META = {
   connection: { catalogSlug: 'connection-management', name: 'Connection Management', description: 'Database connection CRUD, testing, and reservation lifecycle.', badgeLabel: 'Connection Management' },
   reconciliation: { catalogSlug: 'reconciliation', name: 'Reconciliation', description: 'Jobs, job groups, triggers, schedules, runs, and result processing.', badgeLabel: 'Reconciliation' },
   platform: { catalogSlug: 'platform-operations', name: 'Platform Operations', description: 'API keys, encryption, billing, and platform administration.', badgeLabel: 'Platform Operations' },
+  webhook: { catalogSlug: 'webhooks', name: 'Webhooks', description: 'Webhook endpoint management, subscription matching, and outbound delivery lifecycle.', badgeLabel: 'Webhooks' },
 };
 
 const SERVICE_META = {
   'core-api': {
     name: 'Core API',
     description: 'The central REST API that handles user requests, authentication, authorisation, and orchestration. Primary event producer for most domain events.\n\n- **Event Source URI**: `/datarecs/core-api`\n- **Technology**: NestJS (Node.js)',
-    sendsDomains: ['tenant', 'identity', 'workspace', 'connection', 'reconciliation', 'platform'],
-    sendsExclude: ['io.datarecs.connection.reservation.', 'io.datarecs.reconciliation.run.'],
+    sendsDomains: ['tenant', 'identity', 'workspace', 'connection', 'reconciliation', 'platform', 'webhook'],
+    sendsExclude: ['io.datarecs.connection.reservation.', 'io.datarecs.reconciliation.run.', 'io.datarecs.webhook.delivery.'],
     receivesPrefix: ['io.datarecs.reconciliation.run.completed', 'io.datarecs.reconciliation.run.failed', 'io.datarecs.reconciliation.run.rows_processed'],
   },
   'connection-checker': {
@@ -55,6 +56,12 @@ const SERVICE_META = {
     sendsPrefix: [],
     receivesPrefix: ['io.datarecs.reconciliation.run.started', 'io.datarecs.reconciliation.run.stage_completed', 'io.datarecs.reconciliation.run.completed', 'io.datarecs.reconciliation.run.failed', 'io.datarecs.reconciliation.run.rows_processed'],
   },
+  'webhook-service': {
+    name: 'Webhook Service',
+    description: 'Knative subscriber that matches inbound CloudEvents against tenant webhook subscriptions and delivers them to registered HTTP endpoints with HMAC-SHA256 signing, retries, and dead-lettering.\n\n- **Event Source URI**: `/datarecs/webhook-service`\n- **Technology**: NestJS (Node.js)\n- **Delivery**: HTTP POST with exponential-backoff retry',
+    sendsPrefix: ['io.datarecs.webhook.delivery.'],
+    receivesAllEvents: true,
+  },
 };
 
 const LIFECYCLE_GROUPS = {
@@ -69,6 +76,9 @@ const LIFECYCLE_GROUPS = {
   JOB_GROUP_CREATED: 'JobGroupLifecyclePayload', JOB_GROUP_UPDATED: 'JobGroupLifecyclePayload', JOB_GROUP_DELETED: 'JobGroupLifecyclePayload',
   JOB_SCHEDULE_CREATED: 'JobScheduleLifecyclePayload', JOB_SCHEDULE_UPDATED: 'JobScheduleLifecyclePayload', JOB_SCHEDULE_DELETED: 'JobScheduleLifecyclePayload',
   API_KEY_CREATED: 'ApiKeyLifecyclePayload', API_KEY_UPDATED: 'ApiKeyLifecyclePayload', API_KEY_DELETED: 'ApiKeyLifecyclePayload',
+  WEBHOOK_ENDPOINT_CREATED: 'WebhookEndpointLifecyclePayload', WEBHOOK_ENDPOINT_UPDATED: 'WebhookEndpointLifecyclePayload', WEBHOOK_ENDPOINT_DELETED: 'WebhookEndpointLifecyclePayload', WEBHOOK_ENDPOINT_DISABLED: 'WebhookEndpointLifecyclePayload',
+  WEBHOOK_SUBSCRIPTION_CREATED: 'WebhookSubscriptionLifecyclePayload', WEBHOOK_SUBSCRIPTION_UPDATED: 'WebhookSubscriptionLifecyclePayload', WEBHOOK_SUBSCRIPTION_DELETED: 'WebhookSubscriptionLifecyclePayload',
+  WEBHOOK_DELIVERY_FAILED: 'WebhookDeliveryPayload', WEBHOOK_DELIVERY_DEAD_LETTERED: 'WebhookDeliveryPayload',
 };
 
 function parseEventTypes(filePath) {
@@ -200,7 +210,8 @@ function generateServices(events) {
         const excluded = (meta.sendsExclude || []).some(p => event.type.startsWith(p));
         if (inDomain && !excluded && !sends.includes(event.slug)) sends.push(event.slug);
       }
-      if (meta.receivesPrefix && meta.receivesPrefix.some(p => event.type === p || event.type.startsWith(p))) receives.push(event.slug);
+      if (meta.receivesAllEvents) receives.push(event.slug);
+      else if (meta.receivesPrefix && meta.receivesPrefix.some(p => event.type === p || event.type.startsWith(p))) receives.push(event.slug);
     }
     const dir = path.join(catalogRoot, 'services', serviceSlug);
     ensureDir(dir);
