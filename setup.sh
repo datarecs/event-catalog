@@ -11,13 +11,16 @@ TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 GIT_COMMIT=$(git rev-parse --short HEAD 2>/dev/null || echo "nogit")
 IMAGE_TAG="${TIMESTAMP}-${GIT_COMMIT}"
 
-log "📦 Building multi-architecture Docker image with tag: ${IMAGE_TAG}"
+log "📦 Building Docker image with tag: ${IMAGE_TAG}"
 
-# Build and push with unique tag
-docker buildx build --platform linux/amd64,linux/arm64 -t localhost:5001/event-catalog:${IMAGE_TAG} -f Dockerfile --push .
-
-# Also tag with the cluster-internal name
-docker tag localhost:5001/event-catalog:${IMAGE_TAG} k3d-registry.datarecs.local:5000/event-catalog:${IMAGE_TAG}
+# Build natively and push. Use registry cache for faster rebuilds.
+docker build \
+  --cache-from localhost:5001/event-catalog:latest \
+  -t localhost:5001/event-catalog:${IMAGE_TAG} \
+  -t localhost:5001/event-catalog:latest \
+  -f Dockerfile .
+docker push localhost:5001/event-catalog:${IMAGE_TAG}
+docker push localhost:5001/event-catalog:latest
 
 log "📦 Creating namespace if it doesn't exist..."
 kubectl create namespace datarecs --context k3d-datarecs --dry-run=client -o yaml | kubectl apply --context k3d-datarecs -f -
@@ -30,13 +33,13 @@ cp k8s/deployment.yaml "${TEMP_MANIFEST}"
 # Update image reference in the manifest
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # macOS sed
-  sed -i '' "s|image: .*event-catalog:.*|image: k3d-registry.datarecs.local:5000/event-catalog:${IMAGE_TAG}|g" "${TEMP_MANIFEST}"
+  sed -i '' "s|image: .*event-catalog:.*|image: k3d-registry.datarecs.local:5001/event-catalog:${IMAGE_TAG}|g" "${TEMP_MANIFEST}"
 else
   # Linux sed
-  sed -i "s|image: .*event-catalog:.*|image: k3d-registry.datarecs.local:5000/event-catalog:${IMAGE_TAG}|g" "${TEMP_MANIFEST}"
+  sed -i "s|image: .*event-catalog:.*|image: k3d-registry.datarecs.local:5001/event-catalog:${IMAGE_TAG}|g" "${TEMP_MANIFEST}"
 fi
 
-log "🚀 Deploying to Kubernetes with new image: k3d-registry.datarecs.local:5000/event-catalog:${IMAGE_TAG}"
+log "🚀 Deploying to Kubernetes with new image: k3d-registry.datarecs.local:5001/event-catalog:${IMAGE_TAG}"
 kubectl apply --context k3d-datarecs -f "${TEMP_MANIFEST}"
 
 # Clean up temporary file
@@ -63,5 +66,5 @@ kubectl get --context k3d-datarecs pods -n datarecs -l app=event-catalog | grep 
 
 log "✅ event-catalog service deployed successfully with image tag: ${IMAGE_TAG}!"
 echo ""
-log "💡 Image deployed: k3d-registry.datarecs.local:5000/event-catalog:${IMAGE_TAG}"
+log "💡 Image deployed: k3d-registry.datarecs.local:5001/event-catalog:${IMAGE_TAG}"
 log "🌐 Access at: http://events.datarecs.local"
