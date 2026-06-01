@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npx @eventcatalog/core@latest dev",
-    "build": "npx @eventcatalog/core@latest build",
-    "preview": "npx @eventcatalog/core@latest preview",
-    "generate": "npx @eventcatalog/core@latest generate",
+    "dev": "eventcatalog dev",
+    "build": "eventcatalog build",
+    "preview": "eventcatalog preview",
+    "generate": "eventcatalog generate",
     "generate:events": "node scripts/generate-from-events.mjs"
   },
   "dependencies": {
-    "@eventcatalog/core": "latest"
+    "@eventcatalog/core": "3.19.0"
   },
   "devDependencies": {}
 }
