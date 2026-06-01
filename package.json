@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "eventcatalog dev",
-    "build": "eventcatalog build",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 eventcatalog build",
     "preview": "eventcatalog preview",
     "generate": "eventcatalog generate",
     "generate:events": "node scripts/generate-from-events.mjs"
