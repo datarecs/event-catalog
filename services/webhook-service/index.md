@@ -31,6 +31,7 @@ receives:
   - id: connection-updated
   - id: connection-deleted
   - id: connection-tested
+  - id: connection-check-failed
   - id: reservation-created
   - id: reservation-updated
   - id: reservation-deleted
