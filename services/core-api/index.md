@@ -28,6 +28,7 @@ sends:
   - id: connection-updated
   - id: connection-deleted
   - id: connection-tested
+  - id: connection-check-failed
   - id: job-created
   - id: job-updated
   - id: job-deleted
