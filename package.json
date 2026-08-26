@@ -10,7 +10,7 @@
     "generate:events": "node scripts/generate-from-events.mjs"
   },
   "dependencies": {
-    "@eventcatalog/core": "3.48.4"
+    "@eventcatalog/core": "4.7.9"
   },
   "devDependencies": {}
 }
