@@ -84,6 +84,7 @@ const LIFECYCLE_GROUPS = {
   GROUP_CREATED: 'GroupLifecyclePayload', GROUP_UPDATED: 'GroupLifecyclePayload', GROUP_DELETED: 'GroupLifecyclePayload',
   GROUP_MEMBER_ADDED: 'GroupMembershipPayload', GROUP_MEMBER_REMOVED: 'GroupMembershipPayload',
   CUSTOM_ROLE_CREATED: 'CustomRoleLifecyclePayload', CUSTOM_ROLE_UPDATED: 'CustomRoleLifecyclePayload', CUSTOM_ROLE_DELETED: 'CustomRoleLifecyclePayload',
+  ROLE_BINDING_CREATED: 'RoleBindingLifecyclePayload', ROLE_BINDING_UPDATED: 'RoleBindingLifecyclePayload', ROLE_BINDING_DELETED: 'RoleBindingLifecyclePayload',
   USER_JOIN_REQUEST_APPROVED: 'JoinRequestDecisionPayload', USER_JOIN_REQUEST_DENIED: 'JoinRequestDecisionPayload',
   WORKSPACE_CREATED: 'WorkspaceLifecyclePayload', WORKSPACE_UPDATED: 'WorkspaceLifecyclePayload', WORKSPACE_DELETED: 'WorkspaceLifecyclePayload',
   CONNECTION_CREATED: 'ConnectionLifecyclePayload', CONNECTION_UPDATED: 'ConnectionLifecyclePayload', CONNECTION_DELETED: 'ConnectionLifecyclePayload',

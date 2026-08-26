@@ -28,6 +28,9 @@ receives:
   - id: custom-role-created
   - id: custom-role-updated
   - id: custom-role-deleted
+  - id: role-binding-created
+  - id: role-binding-updated
+  - id: role-binding-deleted
   - id: workspace-created
   - id: workspace-updated
   - id: workspace-deleted
@@ -115,8 +118,11 @@ receives:
   - id: sso-connection-created
   - id: sso-connection-updated
   - id: sso-connection-deleted
+  - id: sso-connection-migrated
+  - id: sso-connection-reverted
   - id: sso-login
   - id: sso-login-failed
+  - id: sso-login-rejected
   - id: sso-migration-completed
   - id: user-sso-break-glass-updated
   - id: user-sso-identity-reset
@@ -145,6 +151,9 @@ receives:
   - id: storage-byos-migration-triggered
   - id: storage-byos-reverted
   - id: storage-lock-force-released
+  - id: storage-artifact-posture-set
+  - id: storage-artifact-posture-migration-triggered
+  - id: storage-artifact-posture-access-tested
   - id: endpoint-secret-changed
   - id: admin-operation
 ---
