@@ -3,7 +3,7 @@
 > Owner subagent: `simon` · Part of the DataRecs meta-repo — see `../AGENTS.md` for the platform Priority Hierarchy (tenant isolation → calculation correctness → availability) and repo map. Do not restate that hierarchy here.
 
 ## What this is
-The EventCatalog site documenting every platform event, the domains they belong to, and the services that produce/consume them (mapped to NATS subjects like `io.datarecs.<domain>.<entity>.<action>`). It is documentation/discovery only — no runtime behaviour.
+The EventCatalog site documenting every platform event, the domains they belong to, and the services that produce/consume them. Event enum values are NATS subject suffixes such as `<domain>.<entity>.<action>`; the platform adds the tenant-scoped prefix at publish time. It is documentation/discovery only — no runtime behaviour.
 
 ## Stack & layout
 [@eventcatalog/core](https://eventcatalog.dev) (Astro-based static site), Node 22.

@@ -1,6 +1,6 @@
 ---
-id: run-failed
-name: Run Failed
+id: run-stage-started
+name: Run Stage Started
 version: 0.1.0
 badges:
   - content: CloudEvents v1.0
@@ -15,19 +15,18 @@ badges:
 
 | Attribute | Value |
 |---|---|
-| **type** | `io.datarecs.reconciliation.run.failed` |
+| **type** | `reconciliation.run.stage.started` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema (`JobRunFailedPayload`)
+## Payload Schema (`StageStartedPayload`)
 
 ```typescript
 {
   run_id: string;
   job_id: string;
-  error_code: string;
-  error_message: string;
-  error_details?: string;
+  tenant_id: string;
+  stage_name: string;
 }
 ```
 

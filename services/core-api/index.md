@@ -7,8 +7,10 @@ sends:
   - id: domain-checked
   - id: admin-notified
   - id: user-authenticated
+  - id: user-authentication-failed
   - id: session-refreshed
   - id: user-logged-out
+  - id: permission-denied
   - id: user-invited
   - id: invitation-cancelled
   - id: join-request-approved
@@ -21,6 +23,9 @@ sends:
   - id: custom-role-created
   - id: custom-role-updated
   - id: custom-role-deleted
+  - id: role-binding-created
+  - id: role-binding-updated
+  - id: role-binding-deleted
   - id: workspace-created
   - id: workspace-updated
   - id: workspace-deleted
@@ -42,16 +47,77 @@ sends:
   - id: api-key-created
   - id: api-key-updated
   - id: api-key-deleted
+  - id: api-key-used
+  - id: api-key-authentication-failed
+  - id: export-requested
+  - id: export-completed
+  - id: export-downloaded
+  - id: export-failed
+  - id: archive-completed
+  - id: archive-failed
+  - id: archive-schedule-assigned
+  - id: archive-schedule-updated
+  - id: retention-deleted
+  - id: integrity-verified
+  - id: integrity-verification-failed
   - id: endpoint-created
   - id: endpoint-updated
   - id: endpoint-deleted
   - id: endpoint-disabled
+  - id: endpoint-auto-disabled
   - id: subscription-created
   - id: subscription-updated
   - id: subscription-deleted
+  - id: test
+  - id: oidc-connector-created
+  - id: oidc-connector-updated
+  - id: oidc-connector-deleted
+  - id: oidc-token-exchanged
+  - id: oidc-token-exchange-failed
+  - id: sso-connection-created
+  - id: sso-connection-updated
+  - id: sso-connection-deleted
+  - id: sso-connection-migrated
+  - id: sso-connection-reverted
+  - id: sso-login
+  - id: sso-login-failed
+  - id: sso-login-rejected
+  - id: sso-migration-completed
+  - id: user-sso-break-glass-updated
+  - id: user-sso-identity-reset
+  - id: user-archived-for-identity-recovery
+  - id: view-as-started
+  - id: view-as-ended
+  - id: tenant-viewed
+  - id: scim-user-provisioned
+  - id: scim-user-updated
+  - id: scim-user-deactivated
+  - id: scim-group-created
+  - id: scim-group-updated
+  - id: scim-group-deleted
+  - id: scim-membership-changed
+  - id: scim-authentication-failed
+  - id: user-impersonation-validated
+  - id: session-terminated
+  - id: cli-device-token-issued
+  - id: oauth-token-issued
+  - id: oauth-authorization-decided
+  - id: encryption-byok-configured
+  - id: encryption-byok-migration-triggered
+  - id: encryption-byok-reverted
+  - id: encryption-byok-access-tested
+  - id: storage-byos-configured
+  - id: storage-byos-migration-triggered
+  - id: storage-byos-reverted
+  - id: storage-lock-force-released
+  - id: storage-artifact-posture-set
+  - id: storage-artifact-posture-migration-triggered
+  - id: storage-artifact-posture-access-tested
+  - id: endpoint-secret-changed
+  - id: admin-operation
 receives:
   - id: run-completed
-  - id: run-failed
+  - id: run-errored
   - id: run-rows-processed
 ---
 

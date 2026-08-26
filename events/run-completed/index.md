@@ -15,7 +15,7 @@ badges:
 
 | Attribute | Value |
 |---|---|
-| **type** | `io.datarecs.reconciliation.run.completed` |
+| **type** | `reconciliation.run.completed` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
@@ -25,11 +25,9 @@ badges:
 {
   run_id: string;
   job_id: string;
-  status: RunStatus;
-  rows_processed: number;
-  rows_matched: number;
-  rows_unmatched: number;
-  summary?: Record<string, any>;
+  tenant_id: string;
+  workflow_name: string;
+  result: RunResult;
 }
 ```
 

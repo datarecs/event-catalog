@@ -12,7 +12,7 @@ receives:
   - id: connection-deleted
 ---
 
-gRPC microservice responsible for database connectivity validation, credential storage in Vault, and K8s egress policy management.
+gRPC microservice responsible for database connectivity validation, credential storage in OpenBao, and Kubernetes egress policy management.
 
 - **Event Source URI**: `/datarecs/connection-checker`
 - **Technology**: NestJS gRPC (Node.js)
