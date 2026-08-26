@@ -15,19 +15,27 @@ badges:
 
 | Attribute | Value |
 |---|---|
-| **type** | `io.datarecs.reconciliation.run.stage_completed` |
+| **type** | `reconciliation.run.stage.completed` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema (`JobRunStageCompletedPayload`)
+## Payload Schema (`StageCompletedPayload`)
 
 ```typescript
 {
   run_id: string;
   job_id: string;
+  tenant_id: string;
   stage_name: string;
-  status: string;
-  error_details?: Record<string, any>;
+  result: RunResult;
+  tolerances: Array<{
+        measure_name: string;
+        tolerance_type: string;
+        tolerance_value: number;
+        within_tolerance_count: number;
+        outside_tolerance_count: number;
+        passed: boolean;
+    }>;
 }
 ```
 

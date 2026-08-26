@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "eventcatalog dev",
     "build": "NODE_OPTIONS=--max-old-space-size=4096 eventcatalog build",
+    "check:events": "node scripts/check-events-parity.mjs",
     "preview": "eventcatalog preview",
     "generate": "eventcatalog generate",
     "generate:events": "node scripts/generate-from-events.mjs"

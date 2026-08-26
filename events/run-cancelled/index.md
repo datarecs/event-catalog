@@ -15,7 +15,7 @@ badges:
 
 | Attribute | Value |
 |---|---|
-| **type** | `io.datarecs.reconciliation.run.cancelled` |
+| **type** | `reconciliation.run.cancelled` |
 | **datacontenttype** | `application/json` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
@@ -25,7 +25,9 @@ badges:
 {
   run_id: string;
   job_id: string;
+  tenant_id: string;
   cancelled_by: string;
+  reason: string;
 }
 ```
 

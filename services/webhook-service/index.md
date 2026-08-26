@@ -5,13 +5,17 @@ version: 0.1.0
 sends:
   - id: delivery-failed
   - id: delivery-dead-lettered
+  - id: delivery-retried
+  - id: delivery-replayed
 receives:
   - id: tenant-provisioned
   - id: domain-checked
   - id: admin-notified
   - id: user-authenticated
+  - id: user-authentication-failed
   - id: session-refreshed
   - id: user-logged-out
+  - id: permission-denied
   - id: user-invited
   - id: invitation-cancelled
   - id: join-request-approved
@@ -45,27 +49,107 @@ receives:
   - id: schedule-created
   - id: schedule-updated
   - id: schedule-deleted
-  - id: run-started
-  - id: run-stage-completed
+  - id: run-triggered
+  - id: run-queued
+  - id: run-queue-errored
   - id: run-completed
-  - id: run-failed
+  - id: run-errored
+  - id: run-finalised
+  - id: run-cancel-requested
   - id: run-cancelled
   - id: run-rows-processed
+  - id: run-results-downloaded
+  - id: run-extraction-started
+  - id: run-extraction-completed
+  - id: run-extraction-errored
+  - id: run-comparison-started
+  - id: run-comparison-completed
+  - id: run-comparison-errored
+  - id: run-stage-started
+  - id: run-stage-completed
+  - id: run-stage-errored
   - id: api-key-created
   - id: api-key-updated
   - id: api-key-deleted
+  - id: api-key-used
+  - id: api-key-authentication-failed
+  - id: export-requested
+  - id: export-completed
+  - id: export-downloaded
+  - id: export-failed
+  - id: archive-completed
+  - id: archive-failed
+  - id: archive-schedule-assigned
+  - id: archive-schedule-updated
+  - id: retention-deleted
+  - id: integrity-verified
+  - id: integrity-verification-failed
   - id: endpoint-created
   - id: endpoint-updated
   - id: endpoint-deleted
   - id: endpoint-disabled
+  - id: endpoint-auto-disabled
   - id: subscription-created
   - id: subscription-updated
   - id: subscription-deleted
   - id: delivery-failed
   - id: delivery-dead-lettered
+  - id: delivery-retried
+  - id: delivery-replayed
+  - id: email-sent
+  - id: email-failed
+  - id: email-recipient-rule-created
+  - id: email-recipient-rule-deleted
+  - id: email-settings-updated
+  - id: test
+  - id: oidc-connector-created
+  - id: oidc-connector-updated
+  - id: oidc-connector-deleted
+  - id: oidc-token-exchanged
+  - id: oidc-token-exchange-failed
+  - id: migration-starting
+  - id: migration-step-completed
+  - id: migration-step-failed
+  - id: migration-completed
+  - id: migration-failed
+  - id: sso-connection-created
+  - id: sso-connection-updated
+  - id: sso-connection-deleted
+  - id: sso-login
+  - id: sso-login-failed
+  - id: sso-migration-completed
+  - id: user-sso-break-glass-updated
+  - id: user-sso-identity-reset
+  - id: user-archived-for-identity-recovery
+  - id: view-as-started
+  - id: view-as-ended
+  - id: tenant-viewed
+  - id: scim-user-provisioned
+  - id: scim-user-updated
+  - id: scim-user-deactivated
+  - id: scim-group-created
+  - id: scim-group-updated
+  - id: scim-group-deleted
+  - id: scim-membership-changed
+  - id: scim-authentication-failed
+  - id: user-impersonation-validated
+  - id: session-terminated
+  - id: cli-device-token-issued
+  - id: oauth-token-issued
+  - id: oauth-authorization-decided
+  - id: encryption-byok-configured
+  - id: encryption-byok-migration-triggered
+  - id: encryption-byok-reverted
+  - id: encryption-byok-access-tested
+  - id: storage-byos-configured
+  - id: storage-byos-migration-triggered
+  - id: storage-byos-reverted
+  - id: storage-lock-force-released
+  - id: endpoint-secret-changed
+  - id: admin-operation
 ---
 
-Knative subscriber that matches inbound CloudEvents against tenant webhook subscriptions and delivers them to registered HTTP endpoints with HMAC-SHA256 signing, retries, and dead-lettering.
+NATS JetStream consumer that matches tenant-scoped CloudEvents against webhook subscriptions and delivers them to registered HTTP endpoints with HMAC-SHA256 signing, retries, and dead-lettering.
 
 - **Event Source URI**: `/datarecs/webhook-service`
 - **Technology**: NestJS (Node.js)
