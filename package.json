@@ -2,6 +2,9 @@
   "name": "@datarecs/event-catalog",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=26.0.0"
+  },
   "scripts": {
     "dev": "eventcatalog dev",
     "build": "NODE_OPTIONS=--max-old-space-size=4096 eventcatalog build",
@@ -11,7 +14,7 @@
     "generate:events": "node scripts/generate-from-events.mjs"
   },
   "dependencies": {
-    "@eventcatalog/core": "3.48.4"
+    "@eventcatalog/core": "4.7.9"
   },
   "devDependencies": {}
 }
