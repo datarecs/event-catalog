@@ -2,6 +2,9 @@
   "name": "@datarecs/event-catalog",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.19.0"
+  },
   "scripts": {
     "dev": "eventcatalog dev",
     "build": "NODE_OPTIONS=--max-old-space-size=4096 eventcatalog build",
