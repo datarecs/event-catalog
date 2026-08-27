@@ -6,8 +6,11 @@ COPY . .
 RUN npm run build
 
 FROM node:22-alpine AS runtime
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 WORKDIR /app
 RUN --mount=type=cache,id=npm,target=/root/.npm,sharing=shared npm install -g serve --prefer-offline
 COPY --from=builder /app/dist ./dist
+RUN chown -R appuser:appgroup /app
 EXPOSE 3000
+USER appuser
 CMD ["serve", "dist", "-l", "3000", "-s"]
