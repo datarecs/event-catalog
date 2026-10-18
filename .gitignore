@@ -2,3 +2,7 @@ node_modules/
 dist/
 .astro/
 .eventcatalog-core/
+
+# Agent worktrees: <repo>/.worktrees/<branch-slug>, created and removed by
+# scripts/agent/worktree.sh in datarecs/workspace. Never committed.
+.worktrees/
