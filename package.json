@@ -14,7 +14,7 @@
     "generate:events": "node scripts/generate-from-events.mjs"
   },
   "dependencies": {
-    "@eventcatalog/core": "4.12.3"
+    "@eventcatalog/core": "5.6.0"
   },
   "overrides": {
     "zod": "^4.6.6"
