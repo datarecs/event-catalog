@@ -1,16 +1,17 @@
-FROM node:22-alpine AS builder
+FROM node:26-alpine AS builder
 WORKDIR /app
-COPY package.json ./
-RUN --mount=type=cache,id=npm,target=/root/.npm,sharing=shared npm install --legacy-peer-deps --prefer-offline
+COPY package.json package-lock.json ./
+RUN --mount=type=cache,id=npm,target=/root/.npm,sharing=shared npm ci --no-audit --no-fund --prefer-offline
 COPY . .
 RUN npm run build
+RUN npm prune --omit=dev
 
-FROM node:22-alpine AS runtime
+FROM node:26-alpine AS runtime
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 WORKDIR /app
-RUN --mount=type=cache,id=npm,target=/root/.npm,sharing=shared npm install -g serve --prefer-offline
 COPY --from=builder /app/dist ./dist
+COPY scripts/serve-static.mjs ./serve-static.mjs
 RUN chown -R appuser:appgroup /app
 EXPOSE 3000
 USER appuser
-CMD ["serve", "dist", "-l", "3000", "-s"]
+CMD ["node", "serve-static.mjs"]
