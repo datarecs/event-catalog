@@ -6,7 +6,12 @@ import { fileURLToPath } from 'node:url';
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const catalogRoot = path.resolve(scriptDirectory, '..');
 const args = process.argv.slice(2);
-let eventsPackagePath = path.resolve(catalogRoot, '../data-models-events');
+const defaultEventsPackagePath = [
+  path.resolve(catalogRoot, '../data-models-events'),
+  path.resolve(catalogRoot, '../../data-models-events'),
+  path.resolve(catalogRoot, '../../../data-models-events'),
+].find((candidate) => fs.existsSync(path.join(candidate, 'src/envelope/event-types.ts')));
+let eventsPackagePath = defaultEventsPackagePath ?? path.resolve(catalogRoot, '../data-models-events');
 
 for (let index = 0; index < args.length; index += 1) {
   if (args[index] === '--events-path' && args[index + 1]) {
