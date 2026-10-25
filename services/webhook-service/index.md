@@ -156,6 +156,7 @@ receives:
   - id: storage-artifact-posture-access-tested
   - id: endpoint-secret-changed
   - id: admin-operation
+  - id: telemetry-consent-updated
 ---
 
 NATS JetStream consumer that matches tenant-scoped CloudEvents against webhook subscriptions and delivers them to registered HTTP endpoints with HMAC-SHA256 signing, retries, and dead-lettering.

@@ -7,7 +7,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const catalogRoot = path.resolve(__dirname, '..');
 
 const args = process.argv.slice(2);
-let eventsPackagePath = path.resolve(catalogRoot, '../data-models-events');
+const defaultEventsPackagePath = [
+  path.resolve(catalogRoot, '../data-models-events'),
+  path.resolve(catalogRoot, '../../data-models-events'),
+  path.resolve(catalogRoot, '../../../data-models-events'),
+].find((candidate) => fs.existsSync(path.join(candidate, 'src/envelope/event-types.ts')));
+let eventsPackagePath = defaultEventsPackagePath ?? path.resolve(catalogRoot, '../data-models-events');
 for (let i = 0; i < args.length; i++) {
   if (args[i] === '--events-path' && args[i + 1]) {
     eventsPackagePath = path.resolve(args[i + 1]);
@@ -21,6 +26,7 @@ const DOMAIN_META = {
   connection: { catalogSlug: 'connection-management', name: 'Connection Management', description: 'Database connection CRUD, testing, and reservation lifecycle.', badgeLabel: 'Connection Management' },
   reconciliation: { catalogSlug: 'reconciliation', name: 'Reconciliation', description: 'Jobs, job groups, triggers, schedules, runs, and result processing.', badgeLabel: 'Reconciliation' },
   platform: { catalogSlug: 'platform-operations', name: 'Platform Operations', description: 'API keys, encryption, billing, and platform administration.', badgeLabel: 'Platform Operations' },
+  privacy: { catalogSlug: 'privacy-consent', name: 'Privacy & Consent', description: 'Tenant-homed privacy and telemetry-consent lifecycle events.', badgeLabel: 'Privacy & Consent' },
   audit: { catalogSlug: 'audit-evidence', name: 'Audit Evidence', description: 'Audit export, archive, retention, and integrity-verification lifecycle.', badgeLabel: 'Audit Evidence' },
   webhook: { catalogSlug: 'webhooks', name: 'Webhooks', description: 'Webhook endpoint management, subscription matching, and outbound delivery lifecycle.', badgeLabel: 'Webhooks' },
   notification: { catalogSlug: 'notifications', name: 'Notifications', description: 'Email delivery and tenant notification configuration lifecycle.', badgeLabel: 'Notifications' },
@@ -107,6 +113,10 @@ const LIFECYCLE_GROUPS = {
   JOB_RUN_STAGE_STARTED: 'StageStartedPayload', JOB_RUN_STAGE_COMPLETED: 'StageCompletedPayload',
   JOB_RUN_STAGE_ERRORED: 'StageErroredPayload',
 };
+
+const ENVELOPE_ONLY_EVENTS = new Set([
+  'TELEMETRY_CONSENT_UPDATED',
+]);
 
 function parseEventTypes(filePath) {
   const content = fs.readFileSync(filePath, 'utf-8');
@@ -198,7 +208,19 @@ function generateEvents(events, allSchemas) {
     const meta = DOMAIN_META[event.domain];
     const badgeLabel = meta ? meta.badgeLabel : event.domain;
     const payloadClass = getPayloadClassName(event.enumKey);
-    const schema = formatSchema(allSchemas[payloadClass]);
+    const payloadDocumentation = ENVELOPE_ONLY_EVENTS.has(event.enumKey)
+      ? `## Payload
+
+This event has no dedicated payload class. Its fail-closed audit record uses the shared \`AuditEventBaseV1\` envelope; optional consent details are carried in metadata.`
+      : `## Payload Schema (\`${payloadClass}\`)
+
+\`\`\`typescript
+${formatSchema(allSchemas[payloadClass])}
+\`\`\`
+
+<Admonition type="tip">
+Schema defined in \`@datarecs/data-models-events\` — import and validate with class-validator.
+</Admonition>`;
     const dir = path.join(catalogRoot, 'events', event.slug);
     ensureDir(dir);
     fs.writeFileSync(path.join(dir, 'index.md'),
@@ -223,15 +245,7 @@ badges:
 | **datacontenttype** | \`application/json\` |
 | **Custom: tenantid** | Tenant UUID for multi-tenant routing |
 
-## Payload Schema (\`${payloadClass}\`)
-
-\`\`\`typescript
-${schema}
-\`\`\`
-
-<Admonition type="tip">
-Schema defined in \`@datarecs/data-models-events\` — import and validate with class-validator.
-</Admonition>
+${payloadDocumentation}
 `);
   }
 }
